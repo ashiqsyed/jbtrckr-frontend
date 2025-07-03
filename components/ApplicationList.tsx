@@ -1,6 +1,12 @@
 import Application from "./Application";
+import { ApplicationType } from "@/app/applications/page";
 
-const ApplicationList = ({applications}: any) => {
+interface ApplicationListProps {
+    applications: ApplicationType[];
+    onDelete: (id: string) => void
+}
+
+const ApplicationList = ({applications, onDelete}: ApplicationListProps) => {
     return (
         <div className="flex flex-col w-full">
             {applications.map((app: any) => (
@@ -10,6 +16,9 @@ const ApplicationList = ({applications}: any) => {
                     title={app.title}
                     status={app.status}
                     dateApplied={app.dateApplied}
+                    id={app.id}
+                    onDelete={onDelete}
+                    
                 />
             ))}
         </div>

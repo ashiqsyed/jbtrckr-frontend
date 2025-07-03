@@ -61,7 +61,7 @@ const AddApplication = () => {
     }
 
     return (
-        <div className="w-full h-screen flex items-center justify-center border border-black">
+        <div className="w-full h-screen flex items-center justify-center">
             <Card className="w-1/4">
                 <CardHeader className="text-3xl">
                     <h1>Add a Job Application...</h1>
