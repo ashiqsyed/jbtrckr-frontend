@@ -21,14 +21,24 @@ const ApplicationsPage = () => {
     const [data, setData] = useState<ApplicationType[]>([]);
     const router = useRouter();
     useEffect(() => {        
-        axios.get("http://localhost:8080/api/job-applications")
+        axios.get("http://localhost:8080/api/job-applications", 
+            {
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                }
+            }
+        )
         .then(res => setData(res.data))
         .catch(err => console.log(err))
     }, [])
 
     const handleDelete = async (id: string) => {
         try {
-            await axios.delete(`http://localhost:8080/api/job-applications/${id}`)
+            await axios.delete(`http://localhost:8080/api/job-applications/${id}`, {
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                }
+            })
 
             setData((prev) => prev.filter((app) => app.id !== id))
             

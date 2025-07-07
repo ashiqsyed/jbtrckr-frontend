@@ -11,8 +11,8 @@ export default function Home() {
       JBTRCKR
       <div>A platform to keep track of your job applications</div>
       <div className="flex">
-        <Button onClick={() => router.push("/applications")}>Log in</Button>
-        <Button onClick={() => router.push("/applications")}>Sign Up</Button>
+        <Button onClick={() => router.push("/login")}>Log in</Button>
+        <Button onClick={() => router.push("/sign-up")}>Sign Up</Button>
       </div>
     </div>
   );

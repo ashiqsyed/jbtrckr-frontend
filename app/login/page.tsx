@@ -6,6 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import axios from 'axios';
+
 const LoginPage = () => {
     type LoginType = {
         email: string,
@@ -28,14 +30,28 @@ const LoginPage = () => {
         }))
     };
 
-    const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (!loginInfo.email || !loginInfo.password) {
             alert("You must enter a username and a password.")
         } else {
             console.log(loginInfo);
-            setLoginInfo({email: "", password: ""})
+            try {
+                const res = await axios.post("http://localhost:8080/api/auth/login", loginInfo);
+                const token = res.data.token;
+                const username = res.data.username;
+                console.log(res);
+                localStorage.setItem("token", token);
+                localStorage.setItem("username", username);
+                router.push("/applications");
+                setLoginInfo({email: "", password: ""})
+                alert("Successfully logged in");
+            } catch (error) {
+                console.log("Error logging in");
+                alert("An error occurred logging in.");
+            }
+            
         }
         
     }

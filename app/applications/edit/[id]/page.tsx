@@ -17,7 +17,11 @@ const EditApplication = () => {
 
     useEffect(() => {
         if (params.id) {
-            axios.get(`http://localhost:8080/api/job-applications/${params.id}`)
+            axios.get(`http://localhost:8080/api/job-applications/${params.id}`, {
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                }
+            })
             .then(res => setCurrentApplication(res.data))
             .catch(err => console.log(`error retrieving application with id ${params.id}`))
         }
@@ -39,7 +43,9 @@ const EditApplication = () => {
         try {
             const res = await axios.put(`http://localhost:8080/api/job-applications/${params.id}`, currentApplication, {
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+
                 }
             })
             console.log("response: ", res)

@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardHeader, CardContent, CardFooter} from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-
+import axios from 'axios';
 const SignUpPage = () => {
     type SignUpType = {
         username: string,
@@ -21,19 +21,28 @@ const SignUpPage = () => {
     })
     const router = useRouter();
 
-    const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (!signUpInfo.username || !signUpInfo.password || !signUpInfo.email) {
             alert("You must enter a username, email, and password to create an account.")
         } else {
-            console.log(signUpInfo);
+            try {
+                const res = await axios.post("http://localhost:8080/api/auth/signup", signUpInfo);
+                alert("You successfully signed up!")
+                router.push("/login")
+                setSignUpInfo({
+                    username: "",
+                    password: "",
+                    email: ""
+                })
+                console.log(res);
+            } catch (error)  {
+                alert("Something went wrong when signing up.")
+                console.log(error);
+            }
 
-            setSignUpInfo({
-                username: "",
-                password: "",
-                email: ""
-            })
+            
         }
 
 

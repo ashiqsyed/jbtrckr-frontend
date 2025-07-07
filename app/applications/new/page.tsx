@@ -9,6 +9,7 @@ import axios from 'axios'
 import { useRouter } from "next/navigation";
 
 const AddApplication = () => {
+
     type applicationInfo = {
         company: string,
         title: string,
@@ -43,10 +44,12 @@ const AddApplication = () => {
         }
         setApplication({company: "", title: "", dateApplied: ""})
         console.log(jobApplication)
+        
         try {
             const res = await axios.post("http://localhost:8080/api/job-applications", jobApplication, {
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
                 }
             })
             console.log("Response: ", res)
